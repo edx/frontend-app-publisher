@@ -2,7 +2,7 @@ import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 
 import LoadingSpinner from './index';
-// Thi for fork related testing purpose only before adding protection rules
+//This is for fork related testing purpose only before adding protection rules(test-ulmo)
 describe('LoadingSpinner', () => {
   it('shows a loading spinner', async () => {
     const { container } = render(<LoadingSpinner />);
