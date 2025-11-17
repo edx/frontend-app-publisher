@@ -16,6 +16,7 @@ const ActionButton = ({ className, primary, ...passThroughProps }) => (
   />
 );
 
+// Action comment
 ActionButton.defaultProps = {
   className: '',
   primary: true,
