@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonToolbar check position of button on basis of leftJustify prop 1`] = `
+<div>
+  <div
+    class="btn-toolbar justify-content-end"
+    role="toolbar"
+  >
+    <div
+      class="btn-group ml-2"
+      role="group"
+    >
+      <button
+        type="button"
+      >
+        End
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ButtonToolbar check position of button on basis of leftJustify prop 2`] = `
+<div>
+  <div
+    class="btn-toolbar justify-content-start"
+    role="toolbar"
+  >
+    <div
+      class="btn-group ml-2"
+      role="group"
+    >
+      <button
+        type="button"
+      >
+        Start
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ButtonToolbar renders correctly with actionButtons 1`] = `
+<div>
+  <div
+    class="btn-toolbar justify-content-end"
+    role="toolbar"
+  >
+    <div
+      class="btn-group ml-2"
+      role="group"
+    >
+      <button
+        type="button"
+      >
+        Action
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ButtonToolbar renders correctly with custom props 1`] = `
+<div>
+  <div
+    class="btn-toolbar justify-content-start custom-class"
+    role="toolbar"
+  >
+    <div
+      class="btn-group ml-2"
+      role="group"
+    >
+      <button
+        type="button"
+      >
+        Test
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ButtonToolbar renders correctly with default props 1`] = `
+<div>
+  <div
+    class="btn-toolbar justify-content-end"
+    role="toolbar"
+  />
+</div>
+`;
+
+exports[`ButtonToolbar renders correctly with simple buttons 1`] = `
+<div>
+  <div
+    class="btn-toolbar justify-content-end"
+    role="toolbar"
+  >
+    <div
+      class="btn-group ml-2"
+      role="group"
+    >
+      <button
+        type="button"
+      >
+        Button 1
+      </button>
+    </div>
+    <div
+      class="btn-group ml-2"
+      role="group"
+    >
+      <button
+        type="button"
+      >
+        Button 2
+      </button>
+    </div>
+  </div>
+</div>
+`;
