@@ -1,28 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ActionButton calls onClick method when clicked 1`] = `
-<button
-  class="btn form-submit-btn"
-  type="submit"
->
-  Click Me
-</button>
+<div>
+  <button
+    class="btn form-submit-btn"
+    type="submit"
+  >
+    Click Me
+  </button>
+</div>
 `;
 
 exports[`ActionButton renders correctly with custom props 1`] = `
-<button
-  class="btn form-submit-btn extra-class"
-  type="submit"
->
-  Go
-</button>
+<div>
+  <button
+    class="btn form-submit-btn extra-class"
+    type="submit"
+  >
+    Go
+  </button>
+</div>
 `;
 
 exports[`ActionButton renders correctly with default props 1`] = `
-<button
-  class="btn form-submit-btn"
-  type="submit"
->
-  Submit
-</button>
+<div>
+  <button
+    class="btn form-submit-btn"
+    type="submit"
+  >
+    Submit
+  </button>
+</div>
 `;

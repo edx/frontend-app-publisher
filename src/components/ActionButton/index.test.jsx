@@ -27,7 +27,7 @@ jest.mock('@openedx/paragon', () => {
 
 describe('ActionButton', () => {
   it('renders correctly with default props', () => {
-    const { getByRole, getByText } = render(<ActionButton>Submit</ActionButton>);
+    const { getByRole, getByText, container } = render(<ActionButton>Submit</ActionButton>);
     const button = getByRole('button');
 
     // Renders children
@@ -39,11 +39,11 @@ describe('ActionButton', () => {
 
     // Default type
     expect(button).toHaveAttribute('type', 'submit');
-    expect(button).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('renders correctly with custom props', () => {
-    const { getByRole, getByText } = render(
+    const { getByRole, getByText, container } = render(
       <ActionButton className="extra-class" primary={false}>Go</ActionButton>,
     );
     const button = getByRole('button');
@@ -57,19 +57,18 @@ describe('ActionButton', () => {
 
     // Custom class merged
     expect(button).toHaveClass('extra-class');
-    expect(button).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('calls onClick method when clicked', async () => {
     const user = userEvent.setup();
     const onClick = jest.fn();
-    const { getByRole } = render(
+    const { getByRole, container } = render(
       <ActionButton onClick={onClick}>Click Me</ActionButton>,
     );
     const button = getByRole('button');
-
     await user.click(button);
     expect(onClick).toHaveBeenCalledTimes(1);
-    expect(button).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 });
