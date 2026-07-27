@@ -11,6 +11,8 @@ import LoadingSpinner from '../LoadingSpinner';
 import { getErrorMessages, getPageOptionsFromUrl, updateUrl } from '../../utils';
 
 class TableComponent extends React.Component {
+  pendingPageUpdateFromClick = null;
+
   componentDidMount() {
     // Get initial data
     this.props.paginateTable();
@@ -41,7 +43,13 @@ class TableComponent extends React.Component {
       if (ordering !== prevOrdering) {
         this.props.sortTable(ordering);
       } else if (page !== prevPage) {
-        this.props.paginateTable(parseInt(page, 10));
+        const selectedPage = parseInt(page || 1, 10);
+
+        if (this.pendingPageUpdateFromClick === selectedPage) {
+          this.pendingPageUpdateFromClick = null;
+        } else {
+          this.props.paginateTable(selectedPage);
+        }
       } else if (filter !== prevFilter) {
         this.props.filterTable({ pubq: filter });
       } else if (editors !== prevEditors) {
@@ -55,6 +63,13 @@ class TableComponent extends React.Component {
   componentWillUnmount() {
     this.props.clearTable();
   }
+
+  handlePageSelect = (page) => {
+    const { navigate, location } = this.props;
+    this.pendingPageUpdateFromClick = page;
+    this.props.paginateTable(page);
+    updateUrl({ page }, navigate, location);
+  };
 
   renderTableContent() {
     const {
@@ -86,17 +101,23 @@ class TableComponent extends React.Component {
     }
 
     const paginationOptions = getPageOptionsFromUrl();
+    const pageIndex = paginationOptions.page - 1;
 
     return (
       <div className={className}>
         {loading && <LoadingSpinner />}
         <div className="table-responsive">
           <DataTable
+            key={`table-page-${paginationOptions.page}-${paginationOptions.page_size}`}
             className="table-sm table-striped"
             columns={columnConfig}
             data={formatData(data)}
             isSortable={tableSortable}
             itemCount={itemCount}
+            initialState={{
+              pageIndex,
+              pageSize: paginationOptions.page_size,
+            }}
             defaultSortedColumn={sortColumn}
             defaultSortDirection={sortDirection}
           />
@@ -107,7 +128,7 @@ class TableComponent extends React.Component {
             <Pagination
               pageCount={pageCount}
               currentPage={paginationOptions.page}
-              onPageSelect={page => updateUrl({ page }, navigate, location)}
+              onPageSelect={this.handlePageSelect}
             />
           </div>
           )}
