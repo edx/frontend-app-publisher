@@ -6,12 +6,17 @@ import Select from 'react-select';
 import qs from 'query-string';
 import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import { getConfig } from '@edx/frontend-platform';
-import { SearchField } from '@openedx/paragon';
+import { SearchField, Alert } from '@openedx/paragon';
 
 import TableContainer from '../../containers/TableContainer';
-import ButtonToolbar from '../ButtonToolbar';
 import PageContainer from '../PageContainer';
-import { formatDate, getPageOptionsFromUrl, updateUrl } from '../../utils';
+import {
+  formatDate,
+  getErrorMessages,
+  getPageOptionsFromUrl,
+  updateUrl,
+} from '../../utils';
+import DiscoveryDataApiService from '../../data/services/DiscoveryDataApiService';
 import Pill from '../Pill';
 import { PUBLISHED, REVIEWED, ARCHIVED } from '../../data/constants';
 
@@ -49,6 +54,8 @@ class CourseTable extends React.Component {
         },
       ],
       selectedFilters: [],
+      isExporting: false,
+      exportError: null,
     };
   }
 
@@ -91,6 +98,63 @@ class CourseTable extends React.Component {
     }
   }
 
+  // eslint-disable-next-line react/sort-comp
+  getExportOptions() {
+    return { ...getPageOptionsFromUrl() };
+  }
+
+  getFilenameFromContentDisposition(contentDispositionHeader) {
+    if (!contentDispositionHeader) {
+      return 'publisher_courses.csv';
+    }
+
+    const match = contentDispositionHeader.match(/filename="?([^";]+)"?/i);
+    return match ? match[1] : 'publisher_courses.csv';
+  }
+
+  triggerCsvDownload(blobData, filename) {
+    const blob = new Blob([blobData], { type: 'text/csv;charset=utf-8;' });
+    const downloadUrl = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => {
+      window.URL.revokeObjectURL(downloadUrl);
+    }, 0);
+  }
+
+  handleDownloadCsv() {
+    this.setState({ isExporting: true, exportError: null });
+
+    DiscoveryDataApiService.exportCoursesCsv(this.getExportOptions())
+      .then((response) => {
+        const filename = this.getFilenameFromContentDisposition(response.headers?.['content-disposition']);
+        this.triggerCsvDownload(response.data, filename);
+        this.setState({ isExporting: false });
+      })
+      .catch((error) => {
+        this.setState({
+          isExporting: false,
+          exportError: getErrorMessages(error).join(' '),
+        });
+      });
+  }
+
+  updateFilterQueryParamsInUrl(selectedFilters) {
+    const { location, navigate } = this.props;
+    const courseRunStatusParams = selectedFilters.filter(filter => !Number.isInteger(filter.value));
+    const editorParams = selectedFilters.filter(filter => Number.isInteger(filter.value));
+    const params = {
+      course_run_statuses: courseRunStatusParams.length
+        ? courseRunStatusParams.map(filter => filter.value).toString() : null,
+      editors: editorParams.length ? editorParams.map(filter => filter.value).toString() : null,
+    };
+    updateUrl({ ...params, page: 1 }, navigate, location);
+  }
+
   getSelectedFiltersFromUrl() {
     const pageOptions = getPageOptionsFromUrl();
 
@@ -118,71 +182,74 @@ class CourseTable extends React.Component {
     }
   }
 
-  updateFilterQueryParamsInUrl(selectedFilters) {
-    const { location, navigate } = this.props;
-    const courseRunStatusParams = selectedFilters.filter(filter => !Number.isInteger(filter.value));
-    const editorParams = selectedFilters.filter(filter => Number.isInteger(filter.value));
-    const params = {
-      course_run_statuses: courseRunStatusParams.length
-        ? courseRunStatusParams.map(filter => filter.value).toString() : null,
-      editors: editorParams.length ? editorParams.map(filter => filter.value).toString() : null,
-    };
-    updateUrl({ ...params, page: 1 }, navigate, location);
-  }
-
   renderTableHeader() {
     const { location, navigate } = this.props;
-    const { selectedFilters, filterGroups } = this.state;
+    const {
+      selectedFilters, filterGroups, isExporting, exportError,
+    } = this.state;
     const pageOptions = getPageOptionsFromUrl();
 
     return (
-      <div className="row">
-        <div className="width-percent-44 px-3 float-left">
-          <Select
-            closeMenuOnSelect={false}
-            value={selectedFilters}
-            options={filterGroups}
-            onChange={filters => this.updateFilterQueryParamsInUrl(filters === null
-              ? [] : filters)}
-            isMulti
-            maxMenuHeight="30vh"
-            placeholder="Filters..."
-            styles={
-                {
-                  option: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
-                  multiValue: (styles, { data }) => (
-                    { ...styles, backgroundColor: data.color || '#e7e7e7', opacity: 0.7 }
-                  ),
-                  multiValueLabel: (styles, { data }) => (
-                    {
-                      ...styles,
-                      color: data.label === 'Published' || data.label === 'Scheduled' ? '#ffffff' : '#000000',
-                    }
-                  ),
+      <>
+        {exportError && (
+          <div className="row px-3 mb-3">
+            <Alert variant="danger">Unable to download CSV: {exportError}</Alert>
+          </div>
+        )}
+        <div className="row publisher-toolbar-row px-3">
+          <div className="publisher-toolbar-filters">
+            <Select
+              closeMenuOnSelect={false}
+              value={selectedFilters}
+              options={filterGroups}
+              onChange={filters => this.updateFilterQueryParamsInUrl(filters === null
+                ? [] : filters)}
+              isMulti
+              maxMenuHeight="30vh"
+              placeholder="Filters..."
+              styles={
+                  {
+                    option: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
+                    multiValue: (styles, { data }) => (
+                      { ...styles, backgroundColor: data.color || '#e7e7e7', opacity: 0.7 }
+                    ),
+                    multiValueLabel: (styles, { data }) => (
+                      {
+                        ...styles,
+                        color: data.label === 'Published' || data.label === 'Scheduled' ? '#ffffff' : '#000000',
+                      }
+                    ),
+                  }
                 }
-              }
-          />
-        </div>
-        <div className="width-percent-44 px-3 float-left">
-          <SearchField
-            value={pageOptions.pubq}
-            onClear={() => {
-              updateUrl({ filter: null }, navigate, location);
-            }}
-            onSubmit={(filter) => {
-              updateUrl({ filter, page: 1 }, navigate, location);
-            }}
-            placeholder="Search"
-          />
-        </div>
-        <div className="width-percent-12 px-3 float-right">
-          <ButtonToolbar className="mb-3" rightJustify>
+            />
+          </div>
+          <div className="publisher-toolbar-search">
+            <SearchField
+              value={pageOptions.pubq}
+              onClear={() => {
+                updateUrl({ filter: null }, navigate, location);
+              }}
+              onSubmit={(filter) => {
+                updateUrl({ filter, page: 1 }, navigate, location);
+              }}
+              placeholder="Search"
+            />
+          </div>
+          <div className="publisher-toolbar-actions">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => this.handleDownloadCsv()}
+              disabled={isExporting}
+            >
+              {isExporting ? 'Downloading...' : 'Download CSV'}
+            </button>
             <Link to="/courses/new">
               <button type="button" className="btn btn-primary">New course</button>
             </Link>
-          </ButtonToolbar>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 

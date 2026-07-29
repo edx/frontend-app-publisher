@@ -4,3 +4,33 @@
 .width-percent-12{
     width: 12%;
 }
+
+.publisher-toolbar-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+
+  .publisher-toolbar-filters {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .publisher-toolbar-search {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .publisher-toolbar-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+
+    .btn {
+      margin: 0;
+      flex-shrink: 0;
+    }
+  }
+}

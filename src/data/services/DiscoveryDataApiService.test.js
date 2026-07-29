@@ -14,7 +14,15 @@ const mockTask = {
 };
 
 describe('fetchOrganizationUsers', () => {
-  const get = jest.spyOn(axios, 'get');
+  let get;
+
+  beforeEach(() => {
+    get = jest.spyOn(axios, 'get');
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
 
   it('should resolve on a 404 response with null', () => {
     get.mockRejectedValue({ response: { status: 404 } });
@@ -35,7 +43,15 @@ describe('fetchOrganizationUsers', () => {
 describe('fetchBulkOperationTask', () => {
   const taskId = 1;
   const expectedUrl = `${process.env.DISCOVERY_API_BASE_URL}/api/v1/bulk_operation_tasks/${taskId}/`;
-  const get = jest.spyOn(axios, 'get');
+  let get;
+
+  beforeEach(() => {
+    get = jest.spyOn(axios, 'get');
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
 
   it('should fetch task successfully', async () => {
     const mockData = mockTask;
@@ -57,5 +73,103 @@ describe('fetchBulkOperationTask', () => {
     get.mockRejectedValue(mockError);
 
     await expect(DiscoveryDataApiService.fetchBulkOperationTask(taskId)).rejects.toEqual(mockError);
+  });
+});
+
+describe('exportCoursesCsv', () => {
+  const expectedUrl = `${process.env.DISCOVERY_API_BASE_URL}/api/v1/courses/csv/`;
+  let get;
+
+  beforeEach(() => {
+    get = jest.spyOn(axios, 'get');
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('should export CSV with correct endpoint and responseType', async () => {
+    const mockBlob = new Blob(['test,data'], { type: 'text/csv' });
+    get.mockResolvedValue({ data: mockBlob });
+
+    const options = { ordering: 'title', pubq: 'test' };
+    await DiscoveryDataApiService.exportCoursesCsv(options);
+
+    expect(get).toHaveBeenCalledWith(expectedUrl, expect.objectContaining({
+      responseType: 'blob',
+    }));
+  });
+
+  it('should include filters in export request', async () => {
+    const mockBlob = new Blob(['test,data'], { type: 'text/csv' });
+    get.mockResolvedValue({ data: mockBlob });
+
+    const options = {
+      ordering: 'title',
+      pubq: 'test search',
+      course_run_statuses: 'published,archived',
+      editors: '1,2',
+    };
+    await DiscoveryDataApiService.exportCoursesCsv(options);
+
+    expect(get).toHaveBeenCalledWith(expectedUrl, expect.objectContaining({
+      params: expect.objectContaining({
+        editable: 1,
+        exclude_utm: 1,
+        ordering: 'title',
+        pubq: 'test search',
+        course_run_statuses: 'published,archived',
+        editors: '1,2',
+      }),
+      responseType: 'blob',
+    }));
+  });
+
+  it('should support empty options with default export params', async () => {
+    const mockBlob = new Blob(['test,data'], { type: 'text/csv' });
+    get.mockResolvedValue({ data: mockBlob });
+
+    await DiscoveryDataApiService.exportCoursesCsv({});
+
+    expect(get).toHaveBeenCalledWith(expectedUrl, expect.objectContaining({
+      params: expect.objectContaining({
+        editable: 1,
+        exclude_utm: 1,
+      }),
+      responseType: 'blob',
+    }));
+  });
+
+  it('should strip pagination parameters from export request', async () => {
+    const mockBlob = new Blob(['test,data'], { type: 'text/csv' });
+    get.mockResolvedValue({ data: mockBlob });
+
+    const options = {
+      ordering: 'title',
+      pubq: 'test',
+      page: 2,
+      page_size: 50,
+      limit: 100,
+      offset: 100,
+    };
+    await DiscoveryDataApiService.exportCoursesCsv(options);
+
+    expect(get).toHaveBeenCalledWith(expectedUrl, expect.objectContaining({
+      params: expect.not.objectContaining({
+        page: expect.anything(),
+        page_size: expect.anything(),
+        limit: expect.anything(),
+        offset: expect.anything(),
+      }),
+      responseType: 'blob',
+    }));
+  });
+
+  it('should reject on error', async () => {
+    const mockError = { response: { status: 500 } };
+    get.mockRejectedValue(mockError);
+
+    const options = { ordering: 'title' };
+    await expect(DiscoveryDataApiService.exportCoursesCsv(options)).rejects.toEqual(mockError);
   });
 });
