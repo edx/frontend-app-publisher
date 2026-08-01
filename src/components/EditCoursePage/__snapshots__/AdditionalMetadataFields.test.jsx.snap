@@ -240,7 +240,6 @@ exports[`AdditionalMetadata Fields Display all fields 1`] = `
             >
               <button
                 aria-describedby="course_term_override.label-help-tooltip"
-                aria-label="Help"
                 class="btn btn-link py-0 px-0 mx-1 align-bottom "
                 type="button"
               >
@@ -1508,7 +1507,6 @@ exports[`AdditionalMetadata Fields Display all fields 1`] = `
             >
               <button
                 aria-describedby="additional_metadata.product_meta_keywords-help-tooltip"
-                aria-label="Help"
                 class="btn btn-link py-0 px-0 mx-1 align-bottom text-gray-700"
                 type="button"
               >
@@ -1993,7 +1991,6 @@ exports[`AdditionalMetadata Fields Display required fields on the basis of exter
             >
               <button
                 aria-describedby="course_term_override.label-help-tooltip"
-                aria-label="Help"
                 class="btn btn-link py-0 px-0 mx-1 align-bottom "
                 type="button"
               >
@@ -3270,7 +3267,6 @@ exports[`AdditionalMetadata Fields Display required fields on the basis of exter
             >
               <button
                 aria-describedby="additional_metadata.product_meta_keywords-help-tooltip"
-                aria-label="Help"
                 class="btn btn-link py-0 px-0 mx-1 align-bottom text-gray-700"
                 type="button"
               >

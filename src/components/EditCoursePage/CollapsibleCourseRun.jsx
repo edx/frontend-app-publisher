@@ -457,52 +457,6 @@ class CollapsibleCourseRun extends React.Component {
           )}
           disabled
         />
-        {Array.isArray(courseRun?.seats) && courseRun.seats.some(seat => seat.type === 'credit') && (
-          <>
-            <Field
-              name={`${courseId}.credit_provider`}
-              type="text"
-              component={RenderInputTextField}
-              label={(
-                <FieldLabel
-                  id={`${courseId}.credit_provider.label`}
-                  text="Credit Provider"
-                  helpText="Enter the credit provider name if this run offers credit."
-                />
-              )}
-              extraInput={{ onInvalid: this.openCollapsible }}
-              disabled={disabled}
-            />
-            <Field
-              name={`${courseId}.credit_hours`}
-              type="number"
-              component={RenderInputTextField}
-              label={(
-                <FieldLabel
-                  id={`${courseId}.credit_hours.label`}
-                  text="Credit Hours"
-                  helpText="Number of credit hours offered."
-                />
-              )}
-              extraInput={{ min: 0 }}
-              disabled={disabled}
-            />
-            <Field
-              name={`${courseId}.upgrade_deadline`}
-              type="date"
-              component={DateTimeField}
-              dateLabel="Upgrade Deadline"
-              label={(
-                <FieldLabel
-                  id={`${courseId}.upgrade_deadline.label`}
-                  text="Upgrade Deadline"
-                  helpText="Deadline until which learners can upgrade to credit."
-                />
-              )}
-              disabled={disabled}
-            />
-          </>
-        )}
         <FieldLabel
           id={`${courseId}.staff.label`}
           text="Staff"
@@ -791,14 +745,8 @@ CollapsibleCourseRun.propTypes = {
     run_type: PropTypes.string,
     seats: PropTypes.arrayOf(PropTypes.shape({
       sku: PropTypes.string,
-      credit_provider: PropTypes.string,
-      credit_hours: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      upgrade_deadline: PropTypes.string,
     })),
     status: PropTypes.string,
-    credit_provider: PropTypes.string,
-    credit_hours: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    upgrade_deadline: PropTypes.string,
   }).isRequired,
   courseSubmitting: PropTypes.bool,
   courseSubmitInfo: PropTypes.shape({

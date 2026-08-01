@@ -79,22 +79,6 @@ class CreateCourseRunPage extends React.Component {
       run_type: options.run_type,
       term: options.courseRunKey,
     };
-
-    if (options.run_type === 'credit') {
-      if (options.credit_provider?.trim()) {
-        courseRunData.credit_provider = options.credit_provider.trim();
-      }
-      if (options.credit_hours !== undefined && options.credit_hours !== '') {
-        const parsedHours = Number(options.credit_hours);
-        if (!Number.isNaN(parsedHours)) {
-          courseRunData.credit_hours = parsedHours;
-        }
-      }
-      if (options.upgrade_deadline) {
-        courseRunData.upgrade_deadline = options.upgrade_deadline;
-      }
-    }
-
     return createCourseRun(uuid, courseRunData, navigate);
   }
 
@@ -230,9 +214,6 @@ CreateCourseRunPage.defaultProps = {
 CreateCourseRunPage.propTypes = {
   initialValues: PropTypes.shape({ // eslint-disable-line react/no-unused-prop-types
     course: PropTypes.string,
-    credit_provider: PropTypes.string,
-    credit_hours: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    upgrade_deadline: PropTypes.string,
   }),
   fetchCourseInfo: PropTypes.func,
   courseInfo: PropTypes.shape({

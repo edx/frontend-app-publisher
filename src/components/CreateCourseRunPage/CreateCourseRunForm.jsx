@@ -170,28 +170,6 @@ const BaseCreateCourseRunForm = ({
             name: 'pacing_type',
           }}
         />
-        {currentFormValues?.seats?.some(seat => seat.type === 'credit') && (
-          <>
-            <Field
-              name="credit_provider"
-              type="text"
-              component={RenderInputTextField}
-              label={<FieldLabel text="Credit Provider" />}
-            />
-            <Field
-              name="credit_hours"
-              type="number"
-              component={RenderInputTextField}
-              label={<FieldLabel text="Credit Hours" />}
-            />
-            <Field
-              name="upgrade_deadline"
-              type="date"
-              component={DateTimeField}
-              dateLabel="Upgrade Deadline"
-            />
-          </>
-        )}
         <ButtonToolbar>
           <Link to={`/courses/${uuid}`}>
             <button
@@ -231,11 +209,6 @@ BaseCreateCourseRunForm.propTypes = {
   isCreating: PropTypes.bool.isRequired,
   currentFormValues: PropTypes.shape({
     start: PropTypes.string,
-    seats: PropTypes.arrayOf(
-      PropTypes.shape({
-        type: PropTypes.string.isRequired,
-      }),
-    ),
   }),
   courseRunLabels: PropTypes.arrayOf(PropTypes.shape({})),
   courseRunOptions: PropTypes.shape({

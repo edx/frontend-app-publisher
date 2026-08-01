@@ -5,20 +5,6 @@ import { InfoOutline } from '@openedx/paragon/icons';
 import jsxToString from 'jsx-to-string';
 import ReactTooltip from 'react-tooltip';
 
-function safeJsxToString(tip) {
-  if (tip === null || tip === undefined) {
-    return '';
-  }
-  if (typeof tip === 'string' || typeof tip === 'number') {
-    return String(tip);
-  }
-  try {
-    return jsxToString(tip);
-  } catch (err) {
-    return '';
-  }
-}
-
 class FieldHelp extends React.Component {
   constructor(props) {
     super(props);
@@ -63,7 +49,6 @@ class FieldHelp extends React.Component {
       <span id={this.props.id} className={this.props.className}>
         <button
           type="button"
-          aria-label="Help"
           className={`btn btn-link py-0 px-0 mx-1 align-bottom ${this.props.optional ? 'text-gray-700' : ''}`}
           onClick={this.toggleToolTip}
           onBlur={this.closeToolTip}
@@ -75,7 +60,7 @@ class FieldHelp extends React.Component {
           className="field-help-data"
           data-testid="field-help-data"
           ref={this.setTip}
-          data-tip={safeJsxToString(this.props.tip)}
+          data-tip={jsxToString(this.props.tip)}
           data-html
           data-for={`${this.props.id}-tooltip`}
         />
