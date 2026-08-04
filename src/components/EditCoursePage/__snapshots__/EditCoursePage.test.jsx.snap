@@ -33929,6 +33929,51 @@ exports[`EditCoursePage renders html correctly 1`] = `
           </div>
           <div
             class="card mb-3"
+            data-testid="b2c-subscriptions-pane"
+          >
+            <div
+              class="card-header bg-primary-700 text-white p-3"
+            >
+              B2C Subscriptions
+            </div>
+            <div
+              class="card-body"
+            >
+              <div
+                class="font-weight-bold"
+              >
+                Course Inclusion Status
+              </div>
+              <div
+                class="mt-2 d-flex align-items-center"
+              >
+                <span
+                  aria-hidden="true"
+                  style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: rgb(176, 176, 176); margin-right: 8px; flex-shrink: 0;"
+                />
+                <span>
+                  Not Included
+                </span>
+              </div>
+              <div
+                class="mt-1 x-small text-gray-500"
+              >
+                This course is not included in the B2C Subscription catalog.
+              </div>
+              <div
+                class="mt-3 x-small text-gray-500"
+              >
+                <span
+                  aria-hidden="true"
+                  class="fa fa-lock mr-1"
+                  id="Icon191"
+                />
+                Read-only. Managed internally and cannot be modified in Publisher.
+              </div>
+            </div>
+          </div>
+          <div
+            class="card mb-3"
           >
             <div
               class="card-header bg-primary-700 text-white p-3"
@@ -33965,7 +34010,7 @@ exports[`EditCoursePage renders html correctly 1`] = `
                     >
                       <label
                         class="pgn__form-label"
-                        for="form-field180"
+                        for="form-field181"
                       >
                         <div
                           class=""
@@ -33985,7 +34030,7 @@ exports[`EditCoursePage renders html correctly 1`] = `
                       >
                         <textarea
                           class="form-control"
-                          id="form-field180"
+                          id="form-field181"
                           name="leave-comment"
                         />
                       </div>
@@ -36818,6 +36863,51 @@ exports[`EditCoursePage renders page correctly with courseInfo 1`] = `
           </div>
           <div
             class="card mb-3"
+            data-testid="b2c-subscriptions-pane"
+          >
+            <div
+              class="card-header bg-primary-700 text-white p-3"
+            >
+              B2C Subscriptions
+            </div>
+            <div
+              class="card-body"
+            >
+              <div
+                class="font-weight-bold"
+              >
+                Course Inclusion Status
+              </div>
+              <div
+                class="mt-2 d-flex align-items-center"
+              >
+                <span
+                  aria-hidden="true"
+                  style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: rgb(176, 176, 176); margin-right: 8px; flex-shrink: 0;"
+                />
+                <span>
+                  Not Included
+                </span>
+              </div>
+              <div
+                class="mt-1 x-small text-gray-500"
+              >
+                This course is not included in the B2C Subscription catalog.
+              </div>
+              <div
+                class="mt-3 x-small text-gray-500"
+              >
+                <span
+                  aria-hidden="true"
+                  class="fa fa-lock mr-1"
+                  id="Icon203"
+                />
+                Read-only. Managed internally and cannot be modified in Publisher.
+              </div>
+            </div>
+          </div>
+          <div
+            class="card mb-3"
           >
             <div
               class="card-header bg-primary-700 text-white p-3"
@@ -36854,7 +36944,7 @@ exports[`EditCoursePage renders page correctly with courseInfo 1`] = `
                     >
                       <label
                         class="pgn__form-label"
-                        for="form-field190"
+                        for="form-field193"
                       >
                         <div
                           class=""
@@ -36874,7 +36964,7 @@ exports[`EditCoursePage renders page correctly with courseInfo 1`] = `
                       >
                         <textarea
                           class="form-control"
-                          id="form-field190"
+                          id="form-field193"
                           name="leave-comment"
                         />
                       </div>
@@ -39670,6 +39760,51 @@ exports[`EditCoursePage renders page correctly with courseInfo and courseOptions
           </div>
           <div
             class="card mb-3"
+            data-testid="b2c-subscriptions-pane"
+          >
+            <div
+              class="card-header bg-primary-700 text-white p-3"
+            >
+              B2C Subscriptions
+            </div>
+            <div
+              class="card-body"
+            >
+              <div
+                class="font-weight-bold"
+              >
+                Course Inclusion Status
+              </div>
+              <div
+                class="mt-2 d-flex align-items-center"
+              >
+                <span
+                  aria-hidden="true"
+                  style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: rgb(176, 176, 176); margin-right: 8px; flex-shrink: 0;"
+                />
+                <span>
+                  Not Included
+                </span>
+              </div>
+              <div
+                class="mt-1 x-small text-gray-500"
+              >
+                This course is not included in the B2C Subscription catalog.
+              </div>
+              <div
+                class="mt-3 x-small text-gray-500"
+              >
+                <span
+                  aria-hidden="true"
+                  class="fa fa-lock mr-1"
+                  id="Icon287"
+                />
+                Read-only. Managed internally and cannot be modified in Publisher.
+              </div>
+            </div>
+          </div>
+          <div
+            class="card mb-3"
           >
             <div
               class="card-header bg-primary-700 text-white p-3"
@@ -39706,7 +39841,7 @@ exports[`EditCoursePage renders page correctly with courseInfo and courseOptions
                     >
                       <label
                         class="pgn__form-label"
-                        for="form-field266"
+                        for="form-field277"
                       >
                         <div
                           class=""
@@ -39726,7 +39861,7 @@ exports[`EditCoursePage renders page correctly with courseInfo and courseOptions
                       >
                         <textarea
                           class="form-control"
-                          id="form-field266"
+                          id="form-field277"
                           name="leave-comment"
                         />
                       </div>
@@ -42538,6 +42673,51 @@ exports[`EditCoursePage renders page correctly with courseInfo error 1`] = `
           </div>
           <div
             class="card mb-3"
+            data-testid="b2c-subscriptions-pane"
+          >
+            <div
+              class="card-header bg-primary-700 text-white p-3"
+            >
+              B2C Subscriptions
+            </div>
+            <div
+              class="card-body"
+            >
+              <div
+                class="font-weight-bold"
+              >
+                Course Inclusion Status
+              </div>
+              <div
+                class="mt-2 d-flex align-items-center"
+              >
+                <span
+                  aria-hidden="true"
+                  style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: rgb(176, 176, 176); margin-right: 8px; flex-shrink: 0;"
+                />
+                <span>
+                  Not Included
+                </span>
+              </div>
+              <div
+                class="mt-1 x-small text-gray-500"
+              >
+                This course is not included in the B2C Subscription catalog.
+              </div>
+              <div
+                class="mt-3 x-small text-gray-500"
+              >
+                <span
+                  aria-hidden="true"
+                  class="fa fa-lock mr-1"
+                  id="Icon263"
+                />
+                Read-only. Managed internally and cannot be modified in Publisher.
+              </div>
+            </div>
+          </div>
+          <div
+            class="card mb-3"
           >
             <div
               class="card-header bg-primary-700 text-white p-3"
@@ -42574,7 +42754,7 @@ exports[`EditCoursePage renders page correctly with courseInfo error 1`] = `
                     >
                       <label
                         class="pgn__form-label"
-                        for="form-field246"
+                        for="form-field253"
                       >
                         <div
                           class=""
@@ -42594,7 +42774,7 @@ exports[`EditCoursePage renders page correctly with courseInfo error 1`] = `
                       >
                         <textarea
                           class="form-control"
-                          id="form-field246"
+                          id="form-field253"
                           name="leave-comment"
                         />
                       </div>
@@ -45390,6 +45570,51 @@ exports[`EditCoursePage renders page correctly with courseInfo, courseOptions, a
           </div>
           <div
             class="card mb-3"
+            data-testid="b2c-subscriptions-pane"
+          >
+            <div
+              class="card-header bg-primary-700 text-white p-3"
+            >
+              B2C Subscriptions
+            </div>
+            <div
+              class="card-body"
+            >
+              <div
+                class="font-weight-bold"
+              >
+                Course Inclusion Status
+              </div>
+              <div
+                class="mt-2 d-flex align-items-center"
+              >
+                <span
+                  aria-hidden="true"
+                  style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: rgb(176, 176, 176); margin-right: 8px; flex-shrink: 0;"
+                />
+                <span>
+                  Not Included
+                </span>
+              </div>
+              <div
+                class="mt-1 x-small text-gray-500"
+              >
+                This course is not included in the B2C Subscription catalog.
+              </div>
+              <div
+                class="mt-3 x-small text-gray-500"
+              >
+                <span
+                  aria-hidden="true"
+                  class="fa fa-lock mr-1"
+                  id="Icon323"
+                />
+                Read-only. Managed internally and cannot be modified in Publisher.
+              </div>
+            </div>
+          </div>
+          <div
+            class="card mb-3"
           >
             <div
               class="card-header bg-primary-700 text-white p-3"
@@ -45426,7 +45651,7 @@ exports[`EditCoursePage renders page correctly with courseInfo, courseOptions, a
                     >
                       <label
                         class="pgn__form-label"
-                        for="form-field296"
+                        for="form-field313"
                       >
                         <div
                           class=""
@@ -45446,7 +45671,7 @@ exports[`EditCoursePage renders page correctly with courseInfo, courseOptions, a
                       >
                         <textarea
                           class="form-control"
-                          id="form-field296"
+                          id="form-field313"
                           name="leave-comment"
                         />
                       </div>
@@ -48262,6 +48487,51 @@ exports[`EditCoursePage renders page correctly with courseInfo, courseOptions, a
           </div>
           <div
             class="card mb-3"
+            data-testid="b2c-subscriptions-pane"
+          >
+            <div
+              class="card-header bg-primary-700 text-white p-3"
+            >
+              B2C Subscriptions
+            </div>
+            <div
+              class="card-body"
+            >
+              <div
+                class="font-weight-bold"
+              >
+                Course Inclusion Status
+              </div>
+              <div
+                class="mt-2 d-flex align-items-center"
+              >
+                <span
+                  aria-hidden="true"
+                  style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: rgb(176, 176, 176); margin-right: 8px; flex-shrink: 0;"
+                />
+                <span>
+                  Not Included
+                </span>
+              </div>
+              <div
+                class="mt-1 x-small text-gray-500"
+              >
+                This course is not included in the B2C Subscription catalog.
+              </div>
+              <div
+                class="mt-3 x-small text-gray-500"
+              >
+                <span
+                  aria-hidden="true"
+                  class="fa fa-lock mr-1"
+                  id="Icon335"
+                />
+                Read-only. Managed internally and cannot be modified in Publisher.
+              </div>
+            </div>
+          </div>
+          <div
+            class="card mb-3"
           >
             <div
               class="card-header bg-primary-700 text-white p-3"
@@ -48298,7 +48568,7 @@ exports[`EditCoursePage renders page correctly with courseInfo, courseOptions, a
                     >
                       <label
                         class="pgn__form-label"
-                        for="form-field306"
+                        for="form-field325"
                       >
                         <div
                           class=""
@@ -48318,7 +48588,7 @@ exports[`EditCoursePage renders page correctly with courseInfo, courseOptions, a
                       >
                         <textarea
                           class="form-control"
-                          id="form-field306"
+                          id="form-field325"
                           name="leave-comment"
                         />
                       </div>
@@ -51143,6 +51413,51 @@ exports[`EditCoursePage renders page correctly with courseOptions error 1`] = `
           </div>
           <div
             class="card mb-3"
+            data-testid="b2c-subscriptions-pane"
+          >
+            <div
+              class="card-header bg-primary-700 text-white p-3"
+            >
+              B2C Subscriptions
+            </div>
+            <div
+              class="card-body"
+            >
+              <div
+                class="font-weight-bold"
+              >
+                Course Inclusion Status
+              </div>
+              <div
+                class="mt-2 d-flex align-items-center"
+              >
+                <span
+                  aria-hidden="true"
+                  style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: rgb(176, 176, 176); margin-right: 8px; flex-shrink: 0;"
+                />
+                <span>
+                  Not Included
+                </span>
+              </div>
+              <div
+                class="mt-1 x-small text-gray-500"
+              >
+                This course is not included in the B2C Subscription catalog.
+              </div>
+              <div
+                class="mt-3 x-small text-gray-500"
+              >
+                <span
+                  aria-hidden="true"
+                  class="fa fa-lock mr-1"
+                  id="Icon275"
+                />
+                Read-only. Managed internally and cannot be modified in Publisher.
+              </div>
+            </div>
+          </div>
+          <div
+            class="card mb-3"
           >
             <div
               class="card-header bg-primary-700 text-white p-3"
@@ -51179,7 +51494,7 @@ exports[`EditCoursePage renders page correctly with courseOptions error 1`] = `
                     >
                       <label
                         class="pgn__form-label"
-                        for="form-field256"
+                        for="form-field265"
                       >
                         <div
                           class=""
@@ -51199,7 +51514,7 @@ exports[`EditCoursePage renders page correctly with courseOptions error 1`] = `
                       >
                         <textarea
                           class="form-control"
-                          id="form-field256"
+                          id="form-field265"
                           name="leave-comment"
                         />
                       </div>
@@ -53995,6 +54310,51 @@ exports[`EditCoursePage renders page correctly with courseRunOptions 1`] = `
           </div>
           <div
             class="card mb-3"
+            data-testid="b2c-subscriptions-pane"
+          >
+            <div
+              class="card-header bg-primary-700 text-white p-3"
+            >
+              B2C Subscriptions
+            </div>
+            <div
+              class="card-body"
+            >
+              <div
+                class="font-weight-bold"
+              >
+                Course Inclusion Status
+              </div>
+              <div
+                class="mt-2 d-flex align-items-center"
+              >
+                <span
+                  aria-hidden="true"
+                  style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: rgb(176, 176, 176); margin-right: 8px; flex-shrink: 0;"
+                />
+                <span>
+                  Not Included
+                </span>
+              </div>
+              <div
+                class="mt-1 x-small text-gray-500"
+              >
+                This course is not included in the B2C Subscription catalog.
+              </div>
+              <div
+                class="mt-3 x-small text-gray-500"
+              >
+                <span
+                  aria-hidden="true"
+                  class="fa fa-lock mr-1"
+                  id="Icon299"
+                />
+                Read-only. Managed internally and cannot be modified in Publisher.
+              </div>
+            </div>
+          </div>
+          <div
+            class="card mb-3"
           >
             <div
               class="card-header bg-primary-700 text-white p-3"
@@ -54031,7 +54391,7 @@ exports[`EditCoursePage renders page correctly with courseRunOptions 1`] = `
                     >
                       <label
                         class="pgn__form-label"
-                        for="form-field276"
+                        for="form-field289"
                       >
                         <div
                           class=""
@@ -54051,7 +54411,7 @@ exports[`EditCoursePage renders page correctly with courseRunOptions 1`] = `
                       >
                         <textarea
                           class="form-control"
-                          id="form-field276"
+                          id="form-field289"
                           name="leave-comment"
                         />
                       </div>
@@ -56863,6 +57223,51 @@ exports[`EditCoursePage renders page correctly with courseRunOptions error 1`] =
           </div>
           <div
             class="card mb-3"
+            data-testid="b2c-subscriptions-pane"
+          >
+            <div
+              class="card-header bg-primary-700 text-white p-3"
+            >
+              B2C Subscriptions
+            </div>
+            <div
+              class="card-body"
+            >
+              <div
+                class="font-weight-bold"
+              >
+                Course Inclusion Status
+              </div>
+              <div
+                class="mt-2 d-flex align-items-center"
+              >
+                <span
+                  aria-hidden="true"
+                  style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: rgb(176, 176, 176); margin-right: 8px; flex-shrink: 0;"
+                />
+                <span>
+                  Not Included
+                </span>
+              </div>
+              <div
+                class="mt-1 x-small text-gray-500"
+              >
+                This course is not included in the B2C Subscription catalog.
+              </div>
+              <div
+                class="mt-3 x-small text-gray-500"
+              >
+                <span
+                  aria-hidden="true"
+                  class="fa fa-lock mr-1"
+                  id="Icon311"
+                />
+                Read-only. Managed internally and cannot be modified in Publisher.
+              </div>
+            </div>
+          </div>
+          <div
+            class="card mb-3"
           >
             <div
               class="card-header bg-primary-700 text-white p-3"
@@ -56899,7 +57304,7 @@ exports[`EditCoursePage renders page correctly with courseRunOptions error 1`] =
                     >
                       <label
                         class="pgn__form-label"
-                        for="form-field286"
+                        for="form-field301"
                       >
                         <div
                           class=""
@@ -56919,7 +57324,7 @@ exports[`EditCoursePage renders page correctly with courseRunOptions error 1`] =
                       >
                         <textarea
                           class="form-control"
-                          id="form-field286"
+                          id="form-field301"
                           name="leave-comment"
                         />
                       </div>
