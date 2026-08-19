@@ -285,6 +285,27 @@ class DiscoveryDataApiService {
     const url = `${discoveryBaseUrl}/bulk_operation_tasks/${taskId}/`;
     return getAuthenticatedHttpClient().get(url);
   }
+
+  static exportCoursesCsv(options = {}) {
+    /* eslint-disable camelcase */
+    const params = { ...options };
+    ['page', 'page_size', 'limit', 'offset'].forEach((key) => {
+      delete params[key];
+    });
+    /* eslint-enable camelcase */
+
+    const queryParams = {
+      editable: 1,
+      exclude_utm: 1,
+      include_restricted: restrictionTypeValues,
+      ...params,
+    };
+    const url = `${discoveryBaseUrl}/courses/csv/`;
+    return getAuthenticatedHttpClient().get(url, {
+      params: queryParams,
+      responseType: 'blob',
+    });
+  }
 }
 
 export default DiscoveryDataApiService;
