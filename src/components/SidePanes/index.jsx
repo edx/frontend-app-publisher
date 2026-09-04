@@ -5,7 +5,6 @@ import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import UsersPane from './UsersPane';
 import CommentsPane from './CommentsPane';
 import CatalogInclusionPane from './CatalogInclusionPane';
-import B2CSubscriptionsPane from './B2CSubscriptionsPane';
 
 const SidePanes = (props) => {
   const isEdxStaff = getAuthenticatedUser().administrator;
@@ -36,9 +35,6 @@ const SidePanes = (props) => {
         orgInclusion={orgInclusionList}
       />
       )}
-      <B2CSubscriptionsPane
-        b2cSubscriptionInclusion={props.b2cSubscriptionInclusion}
-      />
       <CommentsPane
         addComment={props.addComment}
         comments={props.comments}
@@ -52,7 +48,6 @@ const SidePanes = (props) => {
 SidePanes.defaultProps = {
   addComment: () => null,
   addCourseEditor: () => null,
-  b2cSubscriptionInclusion: null,
   className: '',
   comments: {},
   courseEditors: {},
@@ -71,7 +66,6 @@ SidePanes.defaultProps = {
 SidePanes.propTypes = {
   addComment: PropTypes.func,
   addCourseEditor: PropTypes.func,
-  b2cSubscriptionInclusion: PropTypes.bool,
   className: PropTypes.string,
   comments: PropTypes.shape(),
   courseEditors: PropTypes.shape(),
