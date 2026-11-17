@@ -2,10 +2,17 @@ import {
   requiredMessage,
   basicValidate,
   getFieldName,
+  handleCourseEditFail,
   editCourseValidate,
   emailValidate,
 } from './validation';
-import { PUBLISHED, UNPUBLISHED } from '../data/constants';
+import {
+  PUBLISHED,
+  REVIEW_BY_INTERNAL,
+  REVIEW_BY_LEGAL,
+  REVIEWED,
+  UNPUBLISHED,
+} from '../data/constants';
 
 describe('basicValidate', () => {
   it('returns a validation message for falsey values', () => {
@@ -166,6 +173,7 @@ describe('editCourseValidate', () => {
         },
         {
           key: 'TestRun',
+          go_live_date: '2030-01-01T00:00:00Z',
           transcript_languages: [],
           staff: [
             {
@@ -199,6 +207,7 @@ describe('editCourseValidate', () => {
         },
         {
           key: 'TestRun',
+          go_live_date: '2030-01-01T00:00:00Z',
           transcript_languages: [
             {
               dummy_field: 'Transcript languages dummy field',
@@ -210,6 +219,131 @@ describe('editCourseValidate', () => {
     };
 
     expect(editCourseValidate(values, { targetRun: unpublishedTargetRun })).toEqual({});
+  });
+
+  it.each([
+    ['is missing', undefined],
+    ['is empty', ''],
+    ['is not a valid date', 'Invalid date'],
+  ])('returns go_live_date error on submitting course run when publish date %s', (_, goLiveDate) => {
+    const values = {
+      short_description: 'Short',
+      full_description: 'Full',
+      outcome: 'Outcome',
+      imageSrc: 'base64;encodedimage',
+      course_runs: [
+        {
+          key: 'NonSubmittingTestRun',
+        },
+        {
+          key: 'TestRun',
+          go_live_date: goLiveDate,
+          transcript_languages: [{ dummy_field: 'Transcript languages dummy field' }],
+          staff: [],
+        },
+      ],
+    };
+
+    const expectedErrors = {
+      course_runs: [
+        null,
+        {
+          go_live_date: requiredMessage,
+        },
+      ],
+    };
+    expect(editCourseValidate(values, { targetRun: unpublishedTargetRun })).toEqual(expectedErrors);
+  });
+
+  it.each([
+    ['reviewed', REVIEWED],
+    ['legal review', REVIEW_BY_LEGAL],
+    ['internal review', REVIEW_BY_INTERNAL],
+  ])('does not require publish date when updating a run that is %s', (_, status) => {
+    const values = {
+      short_description: 'Short',
+      full_description: 'Full',
+      outcome: 'Outcome',
+      imageSrc: 'base64;encodedimage',
+      course_runs: [
+        {
+          key: 'TestRun',
+          go_live_date: undefined,
+          transcript_languages: [{ dummy_field: 'Transcript languages dummy field' }],
+          staff: [],
+        },
+      ],
+    };
+
+    expect(editCourseValidate(values, { targetRun: { status, key: 'TestRun' } })).toEqual({});
+  });
+
+  it('still requires transcript languages when advancing a run already in review without a publish date', () => {
+    const values = {
+      short_description: 'Short',
+      full_description: 'Full',
+      outcome: 'Outcome',
+      imageSrc: 'base64;encodedimage',
+      course_runs: [
+        {
+          key: 'TestRun',
+          go_live_date: undefined,
+          transcript_languages: [],
+          staff: [],
+        },
+      ],
+    };
+
+    const expectedErrors = {
+      course_runs: [
+        { transcript_languages: { _error: requiredMessage } },
+      ],
+    };
+    expect(editCourseValidate(values, { targetRun: { status: REVIEW_BY_LEGAL, key: 'TestRun' } }))
+      .toEqual(expectedErrors);
+  });
+
+  describe('handleCourseEditFail', () => {
+    const publishDateErrors = {
+      course_runs: [null, { go_live_date: requiredMessage }],
+    };
+
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+      document.body.innerHTML = '';
+    });
+
+    it('focuses the publish date input when it has no name attribute', () => {
+      const input = document.createElement('input');
+      input.id = 'course_runs[1].go_live_date-text-label';
+      document.body.appendChild(input);
+
+      handleCourseEditFail(publishDateErrors);
+      jest.advanceTimersByTime(500);
+
+      expect(document.activeElement).toBe(input);
+    });
+
+    it('focuses the field by name when a matching element exists', () => {
+      const input = document.createElement('input');
+      input.name = 'course_runs[1].go_live_date';
+      document.body.appendChild(input);
+
+      handleCourseEditFail(publishDateErrors);
+      jest.advanceTimersByTime(500);
+
+      expect(document.activeElement).toBe(input);
+    });
+
+    it('does not throw when the errored field is not in the DOM', () => {
+      handleCourseEditFail(publishDateErrors);
+
+      expect(() => jest.advanceTimersByTime(500)).not.toThrow();
+    });
   });
 
   test.each([

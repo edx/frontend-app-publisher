@@ -377,7 +377,7 @@ class CollapsibleCourseRun extends React.Component {
                 type="date"
                 component={RenderInputTextField}
                 format={value => getDateWithDashes(value)}
-                normalize={value => moment(value).utc().format(DATE_FORMAT)}
+                normalize={value => (value ? moment(value).utc().format(DATE_FORMAT) : '')}
                 label={(
                   <FieldLabel
                     id={`${courseId}.go_live_date.label`}
