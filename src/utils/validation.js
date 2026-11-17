@@ -1,5 +1,5 @@
 import store from '../data/store';
-import { jsonDeepCopy } from '.';
+import { isValidDate, jsonDeepCopy } from '.';
 import { courseSubmittingFailure } from '../data/actions/courseSubmitInfo';
 import { PUBLISHED } from '../data/constants';
 
@@ -169,6 +169,10 @@ const editCourseValidate = (values, props) => {
           }
         }
       });
+      // isValidDate(undefined) is true (moment() defaults to now), so the presence check is needed too.
+      if (!run.go_live_date || !isValidDate(run.go_live_date)) {
+        runErrors.go_live_date = requiredMessage;
+      }
       if (Object.keys(runErrors).length > 0) {
         hasError = true;
       }
