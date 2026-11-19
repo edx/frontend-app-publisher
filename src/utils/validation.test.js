@@ -166,6 +166,7 @@ describe('editCourseValidate', () => {
         },
         {
           key: 'TestRun',
+          go_live_date: '2030-01-01T00:00:00Z',
           transcript_languages: [],
           staff: [
             {
@@ -199,11 +200,69 @@ describe('editCourseValidate', () => {
         },
         {
           key: 'TestRun',
+          go_live_date: '2030-01-01T00:00:00Z',
           transcript_languages: [
             {
               dummy_field: 'Transcript languages dummy field',
             },
           ],
+          staff: [],
+        },
+      ],
+    };
+
+    expect(editCourseValidate(values, { targetRun: unpublishedTargetRun })).toEqual({});
+  });
+
+  it.each([
+    ['is missing', undefined],
+    ['is empty', ''],
+    ['is not a valid date', 'Invalid date'],
+  ])('returns go_live_date error on submitting course run when publish date %s', (_, goLiveDate) => {
+    const values = {
+      short_description: 'Short',
+      full_description: 'Full',
+      outcome: 'Outcome',
+      imageSrc: 'base64;encodedimage',
+      course_runs: [
+        {
+          key: 'NonSubmittingTestRun',
+        },
+        {
+          key: 'TestRun',
+          go_live_date: goLiveDate,
+          transcript_languages: [{ dummy_field: 'Transcript languages dummy field' }],
+          staff: [],
+        },
+      ],
+    };
+
+    const expectedErrors = {
+      course_runs: [
+        null,
+        {
+          go_live_date: requiredMessage,
+        },
+      ],
+    };
+    expect(editCourseValidate(values, { targetRun: unpublishedTargetRun })).toEqual(expectedErrors);
+  });
+
+  it('does not return go_live_date error on non-submitting course runs without a publish date', () => {
+    const values = {
+      short_description: 'Short',
+      full_description: 'Full',
+      outcome: 'Outcome',
+      imageSrc: 'base64;encodedimage',
+      course_runs: [
+        {
+          key: 'NonSubmittingTestRun',
+          go_live_date: undefined,
+        },
+        {
+          key: 'TestRun',
+          go_live_date: '2030-01-01T00:00:00Z',
+          transcript_languages: [{ dummy_field: 'Transcript languages dummy field' }],
           staff: [],
         },
       ],
