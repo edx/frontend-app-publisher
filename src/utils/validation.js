@@ -1,7 +1,7 @@
 import store from '../data/store';
-import { jsonDeepCopy } from '.';
+import { isValidDate, jsonDeepCopy } from '.';
 import { courseSubmittingFailure } from '../data/actions/courseSubmitInfo';
-import { PUBLISHED } from '../data/constants';
+import { PUBLISHED, UNPUBLISHED } from '../data/constants';
 
 const requiredMessage = 'This field is required';
 
@@ -105,7 +105,12 @@ const handleCourseEditFail = (errors) => {
     // 250ms worked in my personal testing. So I doubled it to give some more elbow room on less
     // performant machines.
     setTimeout(() => {
-      document.getElementsByName(fieldName)[0].focus();
+      // Some inputs (e.g. RenderInputTextField) render without a name attribute, so fall back to the id.
+      const field = document.getElementsByName(fieldName)[0]
+        || document.getElementById(`${fieldName}-text-label`);
+      if (field) {
+        field.focus();
+      }
     }, 500);
   }
 };
@@ -169,6 +174,12 @@ const editCourseValidate = (values, props) => {
           }
         }
       });
+      // Only an unpublished run is being submitted for review; reviewed and in-review runs may predate this rule.
+      const isInitialSubmission = targetRun.status === UNPUBLISHED;
+      // isValidDate(undefined) is true (moment() defaults to now), so the presence check is needed too.
+      if (isInitialSubmission && (!run.go_live_date || !isValidDate(run.go_live_date))) {
+        runErrors.go_live_date = requiredMessage;
+      }
       if (Object.keys(runErrors).length > 0) {
         hasError = true;
       }

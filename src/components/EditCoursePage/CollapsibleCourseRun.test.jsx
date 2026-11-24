@@ -16,6 +16,16 @@ import CollapsibleCourseRun from './CollapsibleCourseRun';
 
 import store from '../../data/store';
 
+jest.mock('../../utils', () => {
+  const actual = jest.requireActual('../../utils');
+  const mockState = { isSafari: true };
+  return {
+    ...actual,
+    get isSafari() { return mockState.isSafari; },
+    setMockIsSafari: (value) => { mockState.isSafari = value; },
+  };
+});
+
 const languageOptions = [
   {
     label: 'Arabic - United Arab Emirates',
@@ -537,5 +547,60 @@ describe('Collapsible Course Run', () => {
     expect(providerInput).toHaveValue('MIT');
     expect(Number(hoursInput.value)).toBe(5);
     expect(deadlineInput).toHaveValue('2035-12-01');
+  });
+
+  describe('publish date input for non-Safari browsers', () => {
+    const { setMockIsSafari } = jest.requireMock('../../utils');
+
+    beforeEach(() => {
+      setMockIsSafari(false);
+    });
+
+    afterEach(() => {
+      setMockIsSafari(true);
+    });
+
+    const renderPublishDateInput = () => {
+      const { container } = render(
+        <MemoryRouter>
+          <Provider store={store}>
+            <IntlProvider locale="en">
+              <WrappedCollapsibleCourseRun
+                languageOptions={languageOptions}
+                pacingTypeOptions={pacingTypeOptions}
+                programOptions={programOptions}
+                ofacRestrictionOptions={ofacRestrictionOptions}
+                courseRun={unpublishedCourseRun}
+                courseId="course_runs[1]"
+                courseUuid="11111111-1111-1111-1111-111111111111"
+                index={1}
+                editable
+                initialValues={{ course_runs: [publishedCourseRun, unpublishedCourseRun] }}
+                currentFormValues={{ course_runs: [publishedCourseRun, unpublishedCourseRun] }}
+              />
+            </IntlProvider>
+          </Provider>
+        </MemoryRouter>,
+      );
+
+      const publishDateInput = container.querySelector('input[id^="course_runs[1].go_live_date"]');
+      expect(publishDateInput).toHaveAttribute('type', 'date');
+      return publishDateInput;
+    };
+
+    it('stores a picked publish date as a UTC-formatted value', () => {
+      const publishDateInput = renderPublishDateInput();
+
+      fireEvent.change(publishDateInput, { target: { value: '2035-12-01' } });
+      expect(store.getState().form.testForm.values.course_runs[1].go_live_date).toBe('2035-12-01T00:00:00Z');
+    });
+
+    it('stores an empty publish date when the user clears the input', () => {
+      const publishDateInput = renderPublishDateInput();
+
+      fireEvent.change(publishDateInput, { target: { value: '2035-12-01' } });
+      fireEvent.change(publishDateInput, { target: { value: '' } });
+      expect(store.getState().form.testForm.values.course_runs[1].go_live_date).toBe('');
+    });
   });
 });
