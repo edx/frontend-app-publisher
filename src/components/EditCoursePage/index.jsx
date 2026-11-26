@@ -757,6 +757,7 @@ class EditCoursePage extends React.Component {
           editable,
           type,
           enterprise_subscription_inclusion,
+          b2c_subscription_inclusion,
         },
         showCreateStatusAlert,
       },
@@ -899,6 +900,9 @@ class EditCoursePage extends React.Component {
                 fetchComments={this.props.fetchComments}
                 enterpriseSubscriptionInclusion={
                   enterprise_subscription_inclusion
+                }
+                b2cSubscriptionInclusion={
+                  b2c_subscription_inclusion
                 }
               />
             )
